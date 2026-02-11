@@ -1,0 +1,3 @@
+docker image build -t feedback-node .
+
+docker run --name feedback-node-app -p 3000:80 -d --rm feedback-node
