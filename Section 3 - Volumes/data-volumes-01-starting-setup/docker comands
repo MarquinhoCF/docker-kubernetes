@@ -2,5 +2,11 @@ docker image build -t feedback-node .
 
 docker run --name feedback-app -p 3000:80 -d --rm feedback-node
 
-Named Volume (It's not deleted when the container is removed)
+## Named Volume (It's not deleted when the container is removed)
 docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback --rm feedback-node
+
+## Bind Mount 
+# Usado para desenvolvimento, pois as alterações feitas no código fonte são refletidas imediatamente no container
+# Tomar cuidado para não sobrescrever os arquivos das dependências do 'node_modules' (criamos um volume anônimo para o 
+# 'node_modules', de forma a assegurar que os arquivos das dependências não sejam sobrescritos)
+docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback -v "/home/marcos/docker-kubernetes/Section 3 - Volumes/data-volumes-01-starting-setup:/app/" -v /app/node_modules --rm feedback-node
