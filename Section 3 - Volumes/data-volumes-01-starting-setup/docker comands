@@ -1,3 +1,6 @@
 docker image build -t feedback-node .
 
-docker run --name feedback-node-app -p 3000:80 -d --rm feedback-node
+docker run --name feedback-app -p 3000:80 -d --rm feedback-node
+
+Named Volume (It's not deleted when the container is removed)
+docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback --rm feedback-node
