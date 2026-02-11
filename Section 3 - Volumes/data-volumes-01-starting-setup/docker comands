@@ -13,3 +13,40 @@ docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback --rm feed
 # Tomar cuidado para não sobrescrever os arquivos das dependências do 'node_modules' (criamos um volume anônimo para o 
 # 'node_modules', de forma a assegurar que os arquivos das dependências não sejam sobrescritos)
 docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback -v "/home/marcos/docker-kubernetes/Section 3 - Volumes/data-volumes-01-starting-setup:/app/" -v /app/node_modules --rm feedback-node
+
+## Read only Bind Mount
+# Usado para evitar que o container faça alterações no código fonte, enquanto o código fonte é atualizado no host 
+docker run --name feedback-app -d -p 3000:80 -v feedback:/app/feedback -v "/home/marcos/docker-kubernetes/Section 3 - Volumes/data-volumes-01-starting-setup:/app/:ro" -v /app/temp -v /app/node_modules --rm feedback-node
+
+
+## Gerenciando os volumes
+
+# 1. Listar
+docker volume ls
+
+
+# 2. Criar
+docker volume create feedback
+
+
+# 2.1 Criar um volume com um driver específico
+
+# 2.1.1 Criar um volume com o driver local (driver padrão)
+docker volume create --driver local --name feedback
+
+# 2.1.2 Criar um volume com o driver local e opções específicas
+docker volume create --driver local --name feedback -o type=tmpfs -o device=tmpfs -o o=size=100m
+    # Tipos de opções para o driver local:
+    # - type: tipo do sistema de arquivos (ex: tmpfs, nfs, etc.)
+    # - device: dispositivo ou caminho do sistema de arquivos (ex: tmpfs, /dev/sda1, etc.)
+    # - o: opções adicionais para o sistema de arquivos (ex: size=100m, rw, etc.)
+
+
+# 3. Inspecionar
+docker volume inspect feedback
+
+# 4. Remover
+docker volume rm feedback
+
+# 4.1 Remover todos os volumes não utilizados
+docker volume prune
