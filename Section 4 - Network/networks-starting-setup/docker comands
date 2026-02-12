@@ -1,3 +1,13 @@
+```bash
 docker image build -t favorites-node .
+```
 
+```bash
 docker container run --name favorites -d --rm -p 3000:3000 favorites node
+```
+
+# Como um container Docker pode se comunicar com serviço web (WWW)?
+Os containers Docker naturalmente podem acessar a internet e se comunicar com serviços web (WWW). 
+
+# Como acessar a máquina host de dentro de um container Docker?
+Você pode usar o endereço IP "host.docker.internal" para acessar a máquina host de dentro de um container Docker. Por exemplo, se você tiver um serviço rodando na porta 3000 da máquina host, você pode acessá-lo de dentro do container usando o seguinte endereço: "http://host.docker.internal:3000"
